@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <!-- para desenvolvimento mobile tamos frameworks e bibliotecas
+        Ratchet, Ionic, Materializa CSS, Framework7, Sencha Touch-->
+    <link href="css/ratchet.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <header class="bar bar-nav">
+        <h1 class="title">SisAmigos</h1>
+    </header>
+
+    <section>
+        <div style="margin-top:43px;">
+            <!--para colocar a barra de rolagem a classe é content-->
+            <ul class="table-view content" id="gridAmigos">
+                
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="index.html">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">Home</span>
+            </a>
+            <a class="tab-item active" href="listar.html">
+                <span class="icon icon-person"></span>
+                <span class="tab-label">Listar</span>
+            </a>
+            <a class="tab-item" href="cadastrar.html">
+                <span class="icon icon-star-filled"></span>
+                <span class="tab-label">Cadastrar</span>
+            </a>
+        </nav>
+    </footer>
+
+    <script src="cordova.js"></script>
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery.tmpl.min.js"></script>
+
+    <!--montamos um template um bloco de codigo que vai ser caregado pela biblioteca de template JQUERY-->
+    <script type="text/x-jquery-tmpl" id="tmplAmigos">
+        <li class="table-view-cell media">
+            <a class="navigate-right">
+                <span class="media-object pull-left icon icon-trash"></span>
+                <div class="media-body">
+                    <!--expreção de bind-->
+                    ${NM_AMIGO} - ${NR_TELEFONE}
+                </div>
+            </a>
+        </li>
+   </script>
+
+    <script>
+        //fazemos uma chamada ajax
+        $.ajax({
+            url: "http://servicekluh.azurewebsites.net/api/amigo",
+            type: "GET",
+            success: function (listaAmigos) {
+                navigator.vibrate(500);
+                //FOR(JS) | $.each(JQUERY) | substituto a biblioteca tmpl da microsoft
+
+                //carregar o template | passa os dados | joga dentro de qual div vai jogar o template ja prenchido
+                $("#tmplAmigos").tmpl(listaAmigos).appendTo("#gridAmigos");
+
+            },
+            error: function (erro) {
+                //alert("deu erro");
+                navigator.notification.alert(erro.responseText, function () { }, "SISAMIGOS 1.0", "OK!");
+            }
+        })
+    </script>
+
+</body>
+</html>

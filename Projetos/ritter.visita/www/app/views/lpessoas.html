@@ -1,0 +1,44 @@
+﻿<ion-view view-title="Listar">
+
+    <ion-content>
+        <div class="row">
+            <div class="list list-inset col col-50">
+                <label class="item item-input">
+                    <i class="icon ion-search placeholder-icon"></i>
+                    <input type="text" placeholder="Pesquisa" ng-model="Search">
+                </label>
+            </div>
+            <div class="list list-inset col">
+                <label class="item item-radio">
+                    <input type="radio" name="group" ng-model="mostra" ng-value="false" ng-checked="true">
+                    <div class="item-content">
+                        Endereço
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                </label>
+            </div>
+            <div class="list list-inset col">
+                <label class="item item-radio">
+                    <input type="radio" name="group" ng-model="mostra" ng-value="true">
+                    <div class="item-content">
+                        Telefone
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                </label>
+            </div>
+        </div>
+
+        <ion-list>
+            <ion-item ng-repeat="i in listaClientes | filter:Search" class="item-button-right">
+                <p>{{i.FAMILIA}}</p> 
+                <p ng-hide="mostra">{{i.RUA}}</p> 
+                <p ng-show="mostra">{{i.TELEFONE}}</p> 
+                <div class="buttons">
+                    <a class="button button-icon icon ion-ios-star-half" ng-click="Favoritos(i)" ng-disabled="!i.FAMILIA"></a>
+                    <a class="button button-icon icon ion-location" ng-click="Mapa(i.LATITUDE, i.LONGITUDE)" ng-disabled="!i.LATITUDE || !i.LONGITUDE"></a>
+                    <a class="button button-icon icon ion-chatbubble-working" ng-click="Anotacao(i)" ng-disabled="!i.FAMILIA"></a>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

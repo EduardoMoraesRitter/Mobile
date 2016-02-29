@@ -1,0 +1,112 @@
+﻿<!--para nao fazer  deply para o apareho submos um servidor local via Node, comendo phonegap serve, e no mobile precisamos do Phonegap Developer ou aut refresh-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <!-- para desenvolvimento mobile tamos frameworks e bibliotecas
+        Ratchet, Ionic, Materializa CSS, Framework7, Sencha Touch-->
+    <link href="css/ratchet.min.css" rel="stylesheet" />
+
+</head>
+<body>
+    <header class="bar bar-nav">
+        <h1 class="title">SisAmigos</h1>
+    </header>
+    <section>
+        <div style="margin-top:43px">
+            <!--a transmissao no mobile é via ajax e nao post com <form-->
+            <div class="input-group">
+                <div class="input-row">
+                    <label>Nome</label>
+                    <input id="nome" autofocus="autofocus" type="text" placeholder="Nome Completo">
+                </div>
+                <div class="input-row">
+                    <label>E-mail</label>
+                    <input id="email" type="email" placeholder="seu_email@dominio.com">
+                </div>
+                <div class="input-row">
+                    <label>Telefone</label>
+                    <input id="telefone" type="tel" placeholder="(00) ____-____">
+                </div>
+                <div class="input-row">
+                    <label>Data</label>
+                    <input id="data" type="date">
+                </div>
+                <br />
+                <button id="cadastrar" class="btn btn-positive btn-block">Cadastrar</button>
+                <button id="limpar" class="btn btn-negative btn-block">Limpar</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <nav class="bar bar-tab">
+            <a class="tab-item" href="index.html">
+                <span class="icon icon-home"></span>
+                <span class="tab-label">Home</span>
+            </a>
+            <a class="tab-item" href="listar.html">
+                <span class="icon icon-person"></span>
+                <span class="tab-label">Listar</span>
+            </a>
+            <a class="tab-item active" href="cadastrar.html">
+                <span class="icon icon-star-filled"></span>
+                <span class="tab-label">Cadastrar</span>
+            </a>
+        </nav>
+    </footer>
+
+    <script src="cordova.js"></script>
+
+    <!--uma biblioteca WRAPPER manipula o DOM-->
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script>
+        //Jquery shortcut events para inteceptar eventos do click
+        $("#limpar").click(function () {
+            navigator.vibrate(1000);
+            $("input").val("");
+            $("#nome").focus();
+        });
+        $("#cadastrar").click(function () {
+            // so deixamos cadastrar se o usuario estiver conectado
+
+            var tipo = navigator.connection.type;
+
+            if (tipo == Connection.NONE || tipo == Connection.UNKNOWN) {
+                alert("voce nao esta online")
+                return;
+            }
+
+
+            //os dados temq ser enviados pra nuvem independente (REST, SOAP) retorna (JSON, XML) sincronizamos na nuvem, via AJAX é uma tecnologia que abrimos o HTTP via JS
+
+            //montamos um objeto com notação literal
+            var NovoAmigo = {
+                NM_AMIGO: $("#nome").val(),
+                DS_EMAIL: $("#email").val(),
+                NR_TELEFONE: $("#telefone").val(),
+                DT_NASCIMENTO: $("#data").val()
+            };
+
+            //abrimos o http via js, chamada remota
+            $.ajax({
+                url: "http://servicekluh.azurewebsites.net/api/amigo",
+                type: "POST",
+                data: NovoAmigo,
+                success: function () {
+                    //alert("deu certo");
+                    navigator.notification.alert("cadastrado com sucesso", function () { }, "SISAMIGOS 1.0", "OK!");
+                },
+                error: function (erro) {
+                    //alert("deu erro");
+                    navigator.notification.alert(erro.responseText, function () { }, "SISAMIGOS 1.0", "OK!");
+                }
+            });
+
+
+        });
+    </script>
+
+</body>
+</html>

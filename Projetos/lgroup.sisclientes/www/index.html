@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--IONIC é o que tem de mais top pra desenho de telas
+        varios componentes e funcionalidades prontas e ele foi projetado pra rodar em cima do ANGULAR-->
+    <link href="css/ionic.min.css" rel="stylesheet" />
+</head>
+<!--colocamos o aplicativo em angular pra rodar dentro da pagina
+    utilizamos a diretiva ng-app-->
+<body ng-app="SISCLIENTES">
+    <header>
+        <div class="bar bar-header bar-stable">
+            <button class="button button-icon icon ion-navicon"></button>
+            <div class="h1 title">SisClientes</div>
+            <button class="button button-icon icon ion-help-circled"></button>
+        </div>
+    </header>
+    <section class="content">
+        <div style="margin-top:43px" ng-view></div>
+    </section>
+    <ion-side-menus>
+        <ion-side-menu-content>
+            <ion-nav-bar class="bar-positive"></ion-nav-bar>
+            <ion-nav-view></ion-nav-view>
+        </ion-side-menu-content>
+    </ion-side-menus>
+    <footer>
+        <div class="tabs tabs-icon-top tabs-stable">
+            <a class="tab-item" href="#/home">
+                <i class="icon ion-home"></i>
+                Home
+            </a>
+            <a class="tab-item" href="#/listar">
+                <i class="icon ion-person-stalker"></i>
+                Listar
+            </a>
+            <a class="tab-item" href="#/cadastrar">
+                <i class="icon ion-person-add"></i>
+                Cadastrar
+            </a>
+        </div>
+    </footer>
+    <!--desde 2009 o q existe de mais top pra desenvolvimento web e mobile hibrido é o angular
+        utiliza MVC e MVVM
+       
+        <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js'></script>
+	<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+ <script src="js/ionic.min.js"></script>
+ <script src="js/angular.min.js"></script>  
+
+<script src="js/angular-route.min.js"></script>
+    -->
+   
+   
+
+    <script src="js/ionic.bundle.min.js"></script>
+    
+    <!--o angular é bem leve, rapido e totalmente modularizado
+        quando importamos ele só veio o kernel o minumo necessario para funcionar o aplicativo
+        e conforme formos precisando de novas funcionalidades baixamos o modulo de definição de rotas
+    -->
+    
+    
+    <!--no final td que for JS vem pra index é onde tds se encontram e se conversam
+        qnd carregamos td de uma vez EAGER LOADING
+        qnd carregamos conforma precisamos LAZY LOADING-->
+
+    <script src="app/inicializacao.js"></script>
+    <script src="app/controllers/homeController.js"></script>
+    <script src="app/controllers/clienteController.js"></script>
+    <script src="app/services/clienteService.js"></script>
+    
+    
+</body>
+</html>
